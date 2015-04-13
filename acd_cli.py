@@ -211,7 +211,7 @@ def clear_action(args):
 
 
 def tree_action(args):
-    tree = selection.node_list(trash=args.include_trash)
+    tree = selection.node_list(root=args.parent, trash=args.include_trash)
     for node in tree:
         print(node)
 
@@ -355,7 +355,8 @@ def main():
     clear_sp = subparsers.add_parser('clear-cache', aliases=['cc'], help='clear node cache')
     clear_sp.set_defaults(func=clear_action)
 
-    tree_sp = subparsers.add_parser('tree', aliases=['t'], help='print directory tree [uses cached data]')
+    tree_sp = subparsers.add_parser('tree', aliases=['t', 'ls', 'dir'], help='print directory tree [uses cached data]')
+    tree_sp.add_argument('parent', nargs='?', default=None, help='remote parent folder')
     tree_sp.add_argument('--include-trash', '-t', action='store_true')
     tree_sp.set_defaults(func=tree_action)
 
